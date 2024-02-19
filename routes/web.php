@@ -18,4 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/import', [UsersController::class,'import'])->name('import');
+// Route::get('/import', [UsersController::class,'import'])->name('import');
+
+Route::post('/import', [UsersController::class,'importExcel'])->name('importar.excel');
+Route::get('/user', [UsersController::class,'index'])->name('user.index');

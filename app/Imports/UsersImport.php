@@ -15,19 +15,24 @@ class UsersImport implements ToModel
     */
     public function model(array $row)
     {
+        // Si la fila está vacía, no se procesa
+        if (empty($row[0])) {
+            return null;
+        }
+
         $user = User::where('email', $row[1])->first();
 
         if ($user) {
             // Si el usuario existe, actualizamos sus datos
             $user->update([
-                'name'     => $row[0],
+                'name' => $row[0],
                 'password' => Hash::make($row[2]),
             ]);
         } else {
             // Si el usuario no existe, lo creamos
             $user = User::create([
-                'name'     => $row[0],
-                'email'    => $row[1],
+                'name' => $row[0],
+                'email' => $row[1],
                 'password' => Hash::make($row[2]),
             ]);
         }

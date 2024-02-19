@@ -9,10 +9,24 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    public function import() 
+    public function index()
     {
-        Excel::import(new UsersImport, 'excel/users.xlsx');
+        return view('usuarios.import.index');
+    }
+
+    // public function import() 
+    // {
+    //     Excel::import(new UsersImport, 'excel/users.xlsx');
         
-        return redirect('/')->with('success', 'All good!');
+    //     return redirect('/')->with('success', 'All good!');
+    // }
+
+    public function importExcel(Request $request)
+    {
+        $archivo_excel = $request->file('archivo_excel');
+        
+        Excel::import(new UsersImport, $archivo_excel);
+
+        return redirect()->back()->with('success', 'Archivo Excel importado correctamente.');
     }
 }
